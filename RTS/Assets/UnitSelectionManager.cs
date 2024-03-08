@@ -60,6 +60,12 @@ public class UnitSelectionManager : MonoBehaviour
         
         //Debug.Log($"{(isSelected ? "Selected" : "Deselected")} a unit", unit);
         EnableUnitMovement(unit, isSelected);
+        EnableOutline(unit, isSelected);
+    }
+
+    private void EnableOutline(GameObject unit, bool enable)
+    {
+        unit.GetComponent<Outline>().enabled = enable;
     }
 
     private void EnableUnitMovement(GameObject unit, bool shouldMove)
@@ -72,6 +78,7 @@ public class UnitSelectionManager : MonoBehaviour
         foreach (var selectedUnit in selectedUnits)
         {
             EnableUnitMovement(selectedUnit, false);
+            EnableOutline(selectedUnit, false);
         }
 
         selectedUnits.Clear();
