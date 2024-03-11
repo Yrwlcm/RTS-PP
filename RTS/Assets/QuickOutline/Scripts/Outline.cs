@@ -107,6 +107,9 @@ public class Outline : MonoBehaviour {
 
       materials.Add(outlineMaskMaterial);
       materials.Add(outlineFillMaterial);
+      
+      outlineFillMaterial.SetColor("_OutlineColor", outlineColor);
+      outlineFillMaterial.SetFloat("_OutlineWidth", outlineWidth);
 
       renderer.materials = materials.ToArray();
     }
@@ -272,8 +275,6 @@ public class Outline : MonoBehaviour {
   void UpdateMaterialProperties() {
 
     // Apply properties according to mode
-    outlineFillMaterial.SetColor("_OutlineColor", outlineColor);
-
     switch (outlineMode) {
       case Mode.OutlineAll:
         outlineMaskMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.Always);
