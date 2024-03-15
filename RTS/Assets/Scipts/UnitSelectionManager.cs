@@ -24,6 +24,8 @@ public class UnitSelectionManager : MonoBehaviour
     private Vector2 startPosition;
     private Vector2 endPosition;
 
+    private const float DragTreshold = 50;
+    
     private void Awake()
     {
         if (Instance is not null && Instance != this)
@@ -67,15 +69,23 @@ public class UnitSelectionManager : MonoBehaviour
         // When Dragging
         if (Input.GetMouseButton(0))
         {
-            if (boxVisual.rect.size.magnitude > 0)
+            if (boxVisual.rect.size.magnitude > DragTreshold)
             {
-                // if (!holdShift)
-                // {
-                //     DeselectAll();
-                // }
-
-                SelectUnits();
+                foreach (var unit in allUnits)
+                {
+                    if (selectionBox.Contains(mainCamera.WorldToScreenPoint(unit.transform.position)))
+                    {
+                        if (unitsInBox.Add(unit))
+                            EnableOutline(unit, true);
+                    }
+                    else if (!selectedUnits.Contains(unit))
+                    {
+                        if (unitsInBox.Remove(unit))
+                            EnableOutline(unit, false);
+                    }
+                }
             }
+
             endPosition = Input.mousePosition;
             DrawVisual();
             DrawSelection();
@@ -84,7 +94,7 @@ public class UnitSelectionManager : MonoBehaviour
         // When Releasing
         if (Input.GetMouseButtonUp(0))
         {
-            if (boxVisual.rect.size.magnitude == 0)
+            if (boxVisual.rect.size.magnitude < DragTreshold)
             {
                 var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
                 var hitClickable = Physics.Raycast(ray, out var hit, Mathf.Infinity, clickable);
@@ -93,7 +103,11 @@ public class UnitSelectionManager : MonoBehaviour
                     ToggleUnitSelection(hit.collider.gameObject);
                 }
             }
-            unitsInBox.Clear();
+            else
+            {
+                SelectUnitsInBox();
+            }
+
             startPosition = Vector2.zero;
             endPosition = Vector2.zero;
             DrawVisual();
@@ -135,6 +149,7 @@ public class UnitSelectionManager : MonoBehaviour
         }
 
         selectedUnits.Clear();
+        unitsInBox.Clear();
     }
 
     private void EnableOutline(GameObject unit, bool enable)
@@ -192,16 +207,11 @@ public class UnitSelectionManager : MonoBehaviour
         }
     }
 
-    private void SelectUnits()
+    private void SelectUnitsInBox()
     {
-        foreach (var unit in allUnits)
+        foreach (var unit in unitsInBox)
         {
-            if (selectionBox.Contains(mainCamera.WorldToScreenPoint(unit.transform.position))
-                && !unitsInBox.Contains(unit))
-            {
-                ToggleUnitSelection(unit);
-                unitsInBox.Add(unit);
-            }
+            SetUnitSelection(unit, true);
         }
     }
 }
