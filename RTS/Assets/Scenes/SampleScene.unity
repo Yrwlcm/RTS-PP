@@ -686,7 +686,7 @@ GameObject:
   - component: {fileID: 1354178776}
   - component: {fileID: 1354178777}
   m_Layer: 0
-  m_Name: UnitSelectionManager
+  m_Name: SelectionManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -723,10 +723,6 @@ MonoBehaviour:
   clickable:
     serializedVersion: 2
     m_Bits: 128
-  ground:
-    serializedVersion: 2
-    m_Bits: 64
-  groundMarker: {fileID: 0}
   boxVisual: {fileID: 1327826727}
 --- !u!1 &1375714727
 GameObject:

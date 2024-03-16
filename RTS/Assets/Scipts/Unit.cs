@@ -1,17 +1,54 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Scipts.Interfaces;
 using UnityEngine;
 
-public class Unit : MonoBehaviour
+namespace Scipts
 {
-    private void Start()
+    public class Unit : MonoBehaviour, ISelectable
     {
-        UnitSelectionManager.Instance.allUnits.Add(gameObject);
-    }
+        public GameObject GameObject { get; private set; }
+        public bool Selected { get; private set; }
+        public bool OutlineEnabled { get; private set; }
 
-    private void OnDestroy()
-    {
-        UnitSelectionManager.Instance.allUnits.Remove(gameObject);
+        private Outline outline;
+        private UnitMovement movement;
+
+        private void Start()
+        {
+            GameObject = gameObject;
+            SelectionManager.Instance.allUnits.Add(this);
+            outline = GetComponent<Outline>();
+            movement = GetComponent<UnitMovement>();
+        }
+
+        private void OnDestroy()
+        {
+            SelectionManager.Instance.allUnits.Remove(this);
+        }
+
+        public void EnableOutline()
+        {
+            OutlineEnabled = true;
+            outline.enabled = true;
+        }
+
+        public void DisableOutline()
+        {
+            OutlineEnabled = false;
+            outline.enabled = false;
+        }
+
+        public void Select()
+        {
+            EnableOutline();
+            Selected = true;
+            movement.enabled = true;
+        }
+
+        public void Deselect()
+        {
+            DisableOutline();
+            Selected = false;
+            movement.enabled = false;
+        }
     }
 }
