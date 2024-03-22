@@ -1075,6 +1075,7 @@ MonoBehaviour:
   moveSpeed: 35
   rotateSpeed: 100
   edgeScrollingBorder: 20
+  mainCamera: {fileID: 330585545}
 --- !u!1 &1732891064
 GameObject:
   m_ObjectHideFlags: 0
