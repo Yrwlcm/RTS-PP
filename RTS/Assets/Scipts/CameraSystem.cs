@@ -1,14 +1,15 @@
 using System;
 using Cinemachine;
+using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class CameraSystem : MonoBehaviour
+public class CameraSystem : NetworkBehaviour
 {
     [SerializeField] private int moveSpeed = 35;
     [SerializeField] private int rotateSpeed = 100;
-    [SerializeField] private int edgeScrollingBorder = 20;
+    [SerializeField] private int edgeScrollingBorderPercent = 20;
     [SerializeField] private Camera mainCamera;
     [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
     [SerializeField] private float followOffsetMin = 50f;
@@ -20,14 +21,27 @@ public class CameraSystem : MonoBehaviour
     private Vector2 lastMousePosition;
     private Vector3 dragOrigin;
     private Vector3 followOffset;
+    private CinemachineTransposer cinemachineTransposer;
+
+    bool IsMouseOverGameWindow =>
+        !(0 > Input.mousePosition.x || 0 > Input.mousePosition.y || Screen.width < Input.mousePosition.x ||
+          Screen.height < Input.mousePosition.y);
+
 
     private void Awake()
     {
-        followOffset = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset;
+        cinemachineTransposer = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineTransposer>();
+        followOffset = cinemachineTransposer.m_FollowOffset;
     }
 
     void Update()
     {
+        if (!IsOwner)
+            return;
+        
+        if (!IsMouseOverGameWindow)
+            return;
+
         var inputDirection = new Vector3();
 
         HandleCameraZoom();
@@ -102,10 +116,8 @@ public class CameraSystem : MonoBehaviour
             followOffset = zoomDirection * followOffsetMax;
         }
 
-        var cinemachineOffset = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineTransposer>();
-
-        cinemachineOffset.m_FollowOffset =
-            Vector3.Lerp(cinemachineOffset.m_FollowOffset, followOffset, zoomTransitionSpeed * Time.deltaTime);
+        cinemachineTransposer.m_FollowOffset =
+            Vector3.Lerp(cinemachineTransposer.m_FollowOffset, followOffset, zoomTransitionSpeed * Time.deltaTime);
     }
 
     private bool CheckInputDirection(out Vector3 moveDirection)
@@ -124,10 +136,15 @@ public class CameraSystem : MonoBehaviour
     private bool CheckEdgeScrollDirection(out Vector3 moveDirection)
     {
         var localDirection = new Vector3();
-        if (Input.mousePosition.x < edgeScrollingBorder) localDirection.x = -1;
-        if (Input.mousePosition.y < edgeScrollingBorder) localDirection.z = -1;
-        if (Input.mousePosition.x > Screen.width - edgeScrollingBorder) localDirection.x = +1;
-        if (Input.mousePosition.y > Screen.height - edgeScrollingBorder) localDirection.z = +1;
+        var scrollingBorderPercent = 1d / edgeScrollingBorderPercent;
+        if (Input.mousePosition.x < Screen.width * scrollingBorderPercent)
+            localDirection.x = -1;
+        if (Input.mousePosition.y < Screen.height * scrollingBorderPercent)
+            localDirection.z = -1;
+        if (Input.mousePosition.x > Screen.width - Screen.width * scrollingBorderPercent)
+            localDirection.x = +1;
+        if (Input.mousePosition.y > Screen.height - Screen.height * scrollingBorderPercent)
+            localDirection.z = +1;
 
         moveDirection = localDirection;
         return localDirection.magnitude > 0;

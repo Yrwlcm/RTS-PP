@@ -1,11 +1,10 @@
 using System.Collections.Generic;
+using Scipts;
 using Scipts.Interfaces;
 using UnityEngine;
 
 public class SelectionManager : MonoBehaviour
 {
-    public static SelectionManager Instance { get; private set; }
-
     public readonly HashSet<ISelectable> allUnits = new();
     private readonly HashSet<ISelectable> selectedUnits = new();
     private readonly HashSet<ISelectable> unitsInBox = new();
@@ -19,18 +18,6 @@ public class SelectionManager : MonoBehaviour
     private Vector3 endPosition;
 
     private const float DragTreshold = 50;
-
-    private void Awake()
-    {
-        if (Instance is not null && Instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            Instance = this;
-        }
-    }
 
     private void Start()
     {

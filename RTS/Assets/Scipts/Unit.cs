@@ -11,18 +11,25 @@ namespace Scipts
 
         private Outline outline;
         private UnitMovement movement;
+        private SelectionManager selectionManager;
 
-        private void Start()
+        private void Awake()
         {
             GameObject = gameObject;
-            SelectionManager.Instance.allUnits.Add(this);
             outline = GetComponent<Outline>();
             movement = GetComponent<UnitMovement>();
         }
 
         private void OnDestroy()
         {
-            SelectionManager.Instance.allUnits.Remove(this);
+            selectionManager.allUnits.Remove(this);
+        }
+
+        public void Spawn(SelectionManager bindingSelectionManager, Vector3 position, Quaternion rotation)
+        {
+            var instance = Instantiate(this, position, rotation);
+            instance.selectionManager = bindingSelectionManager;
+            instance.selectionManager.allUnits.Add(instance);
         }
 
         public void EnableOutline()
