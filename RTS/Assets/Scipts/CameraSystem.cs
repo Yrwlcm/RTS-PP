@@ -12,6 +12,7 @@ public class CameraSystem : NetworkBehaviour
     [SerializeField] private int edgeScrollingBorderPercent = 20;
     [SerializeField] private Camera mainCamera;
     [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
+    [SerializeField] private AudioListener listener;
     [SerializeField] private float followOffsetMin = 50f;
     [SerializeField] private float followOffsetMax = 100f;
     [SerializeField] private float zoomTransitionSpeed = 10f;
@@ -25,20 +26,34 @@ public class CameraSystem : NetworkBehaviour
 
     bool IsMouseOverGameWindow =>
         !(0 > Input.mousePosition.x || 0 > Input.mousePosition.y || Screen.width < Input.mousePosition.x ||
-          Screen.height < Input.mousePosition.y);
+          Screen.height < Input.mousePosition.y) && Application.isFocused;
 
 
-    private void Awake()
+    // private void Awake()
+    // {
+    //     cinemachineTransposer = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineTransposer>();
+    //     followOffset = cinemachineTransposer.m_FollowOffset;
+    // }
+
+    public override void OnNetworkSpawn()
     {
-        cinemachineTransposer = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineTransposer>();
-        followOffset = cinemachineTransposer.m_FollowOffset;
+        if (IsOwner)
+        {
+            cinemachineTransposer = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineTransposer>();
+            followOffset = cinemachineTransposer.m_FollowOffset;
+            listener.enabled = true;
+            cinemachineVirtualCamera.Priority = 1;
+        }
+        else
+        {
+            cinemachineVirtualCamera.Priority = 0;
+        }
     }
 
     void Update()
     {
         if (!IsOwner)
             return;
-        
         if (!IsMouseOverGameWindow)
             return;
 
@@ -58,11 +73,11 @@ public class CameraSystem : NetworkBehaviour
             inputDirection = moveDirection.normalized * moveSpeed * Time.deltaTime;
         }
 
-        transform.position += inputDirection;
-
         CheckRotateDirection(out var rotateDirection);
-
+        
+        transform.position += inputDirection;
         transform.eulerAngles += new Vector3(0, rotateDirection * rotateSpeed * Time.deltaTime, 0);
+
     }
 
     private bool CheckRotateDirection(out int rotateDirection)
@@ -84,14 +99,14 @@ public class CameraSystem : NetworkBehaviour
             dragPanMoveActive = true;
         }
 
-        if (!Input.GetMouseButton((int)MouseButton.Middle))
+        if (Input.GetMouseButtonUp((int)MouseButton.Middle))
         {
             dragPanMoveActive = false;
             return new Vector3();
         }
 
         var difference = dragOrigin - ScreenPositionToGroundRaycast(Input.mousePosition);
-        difference.y = 0;
+        
         return difference;
     }
 

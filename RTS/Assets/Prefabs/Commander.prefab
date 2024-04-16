@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 4057548856445029398}
   - component: {fileID: -8634630102655643475}
   - component: {fileID: 8491375305803989088}
-  - component: {fileID: -8622746745490902067}
+  - component: {fileID: 5199293162837616271}
   m_Layer: 0
   m_Name: Commander
   m_TagString: Untagged
@@ -193,7 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 79863364
+  GlobalObjectIdHash: 2715645519
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -219,11 +219,12 @@ MonoBehaviour:
   edgeScrollingBorderPercent: 20
   mainCamera: {fileID: 4455917168139414696}
   cinemachineVirtualCamera: {fileID: 4739813405812550159}
+  listener: {fileID: 1489301512882912925}
   followOffsetMin: 5
   followOffsetMax: 50
   zoomTransitionSpeed: 10
   zoomAmount: 3
---- !u!114 &-8622746745490902067
+--- !u!114 &5199293162837616271
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -232,7 +233,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4104657597226133364}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Script: {fileID: 11500000, guid: 12de79928f0bd6040b29aa38cb951532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   UseUnreliableDeltas: 0
