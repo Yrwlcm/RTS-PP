@@ -1,28 +1,32 @@
+using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class UnitMovement : MonoBehaviour
+namespace Scipts
 {
-    private Camera mainCamera;
-    private NavMeshAgent navAgent;
-    public LayerMask ground;
-
-    private void Start()
+    public class UnitMovement : NetworkBehaviour
     {
-        mainCamera = Camera.main;
-        navAgent = GetComponent<NavMeshAgent>();
-    }
-    
-    private void Update()
-    {
-        if (!Input.GetMouseButtonDown((int)MouseButton.Right)) return;
-        
-        var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        private Camera mainCamera;
+        private NavMeshAgent navAgent;
+        public LayerMask ground;
 
-        if (Physics.Raycast(ray, out var hit, Mathf.Infinity, ground))
+        private void Start()
         {
-            navAgent.SetDestination(hit.point);
+            mainCamera = Camera.main;
+            navAgent = GetComponent<NavMeshAgent>();
+        }
+    
+        private void Update()
+        {
+            if (!Input.GetMouseButtonDown((int)MouseButton.Right)) return;
+        
+            var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out var hit, Mathf.Infinity, ground))
+            {
+                navAgent.SetDestination(hit.point);
+            }
         }
     }
 }

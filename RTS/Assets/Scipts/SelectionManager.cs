@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 using Scipts;
 using Scipts.Interfaces;
+using Unity.Netcode;
 using UnityEngine;
 
-public class SelectionManager : MonoBehaviour
+public class SelectionManager : NetworkBehaviour
 {
-    public readonly HashSet<ISelectable> allUnits = new();
-    private readonly HashSet<ISelectable> selectedUnits = new();
-    private readonly HashSet<ISelectable> unitsInBox = new();
+    public readonly HashSet<Unit> allUnits = new();
+    private readonly HashSet<Unit> selectedUnits = new();
+    private readonly HashSet<Unit> unitsInBox = new();
 
     [SerializeField] private Camera mainCamera;
     [SerializeField] private RectTransform boxVisual;
@@ -29,6 +30,9 @@ public class SelectionManager : MonoBehaviour
 
     private void Update()
     {
+        if (!IsOwner)
+            return;
+        
         if (Input.GetMouseButtonDown(0))
         {
             OnMouseClick();
@@ -62,7 +66,7 @@ public class SelectionManager : MonoBehaviour
         {
             foreach (var unit in allUnits)
             {
-                var unitScreenPosition = mainCamera.WorldToScreenPoint(unit.GameObject.transform.position);
+                var unitScreenPosition = mainCamera.WorldToScreenPoint(unit.gameObject.transform.position);
                 if (selectionBox.Contains(unitScreenPosition) && unitsInBox.Add(unit))
                 {
                     unit.EnableOutline();
@@ -87,7 +91,7 @@ public class SelectionManager : MonoBehaviour
             var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hit, Mathf.Infinity, clickable))
             {
-                var selectable = hit.collider.gameObject.GetComponent<ISelectable>();
+                var selectable = hit.collider.gameObject.GetComponent<Unit>();
 
                 if (selectable.Selected)
                     DeselectAndRemember(selectable);
@@ -106,13 +110,13 @@ public class SelectionManager : MonoBehaviour
         DrawVisual();
     }
 
-    private void SelectAndRemember(ISelectable unit)
+    private void SelectAndRemember(Unit unit)
     {
         unit.Select();
         selectedUnits.Add(unit);
     }
 
-    private void DeselectAndRemember(ISelectable selectable)
+    private void DeselectAndRemember(Unit selectable)
     {
         selectable.Deselect();
         selectedUnits.Remove(selectable);
