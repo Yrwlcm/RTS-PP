@@ -8,7 +8,7 @@ public class CameraSystem : MonoBehaviour
 {
     [SerializeField] private int moveSpeed = 35;
     [SerializeField] private int rotateSpeed = 100;
-    [SerializeField] private int edgeScrollingBorder = 20;
+    [SerializeField] private int edgeScrollingBorderPercent = 20;
     [SerializeField] private Camera mainCamera;
     [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
     [SerializeField] private float followOffsetMin = 50f;
@@ -20,6 +20,10 @@ public class CameraSystem : MonoBehaviour
     private Vector2 lastMousePosition;
     private Vector3 dragOrigin;
     private Vector3 followOffset;
+    
+    bool IsMouseOverGameWindow =>
+        !(0 > Input.mousePosition.x || 0 > Input.mousePosition.y || Screen.width < Input.mousePosition.x ||
+          Screen.height < Input.mousePosition.y) && Application.isFocused;
 
     private void Awake()
     {
@@ -28,6 +32,9 @@ public class CameraSystem : MonoBehaviour
 
     void Update()
     {
+        if (!IsMouseOverGameWindow)
+            return;
+        
         var inputDirection = new Vector3();
 
         HandleCameraZoom();
@@ -124,10 +131,15 @@ public class CameraSystem : MonoBehaviour
     private bool CheckEdgeScrollDirection(out Vector3 moveDirection)
     {
         var localDirection = new Vector3();
-        if (Input.mousePosition.x < edgeScrollingBorder) localDirection.x = -1;
-        if (Input.mousePosition.y < edgeScrollingBorder) localDirection.z = -1;
-        if (Input.mousePosition.x > Screen.width - edgeScrollingBorder) localDirection.x = +1;
-        if (Input.mousePosition.y > Screen.height - edgeScrollingBorder) localDirection.z = +1;
+        var scrollingBorderPercent = 1d / edgeScrollingBorderPercent;
+        if (Input.mousePosition.x < Screen.width * scrollingBorderPercent)
+            localDirection.x = -1;
+        if (Input.mousePosition.y < Screen.height * scrollingBorderPercent)
+            localDirection.z = -1;
+        if (Input.mousePosition.x > Screen.width - Screen.width * scrollingBorderPercent)
+            localDirection.x = +1;
+        if (Input.mousePosition.y > Screen.height - Screen.height * scrollingBorderPercent)
+            localDirection.z = +1;
 
         moveDirection = localDirection;
         return localDirection.magnitude > 0;
