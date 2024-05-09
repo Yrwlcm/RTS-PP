@@ -3,6 +3,7 @@ using Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
+using static CameraUtilities;
 
 public class CameraSystem : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class CameraSystem : MonoBehaviour
     private Vector2 lastMousePosition;
     private Vector3 dragOrigin;
     private Vector3 followOffset;
-    
+
     bool IsMouseOverGameWindow =>
         !(0 > Input.mousePosition.x || 0 > Input.mousePosition.y || Screen.width < Input.mousePosition.x ||
           Screen.height < Input.mousePosition.y) && Application.isFocused;
@@ -34,7 +35,7 @@ public class CameraSystem : MonoBehaviour
     {
         if (!IsMouseOverGameWindow)
             return;
-        
+
         var inputDirection = new Vector3();
 
         HandleCameraZoom();
@@ -73,7 +74,7 @@ public class CameraSystem : MonoBehaviour
     {
         if (Input.GetMouseButtonDown((int)MouseButton.Middle) && !dragPanMoveActive)
         {
-            dragOrigin = ScreenPositionToGroundRaycast(Input.mousePosition);
+            dragOrigin = ScreenPositionToGroundRaycast(mainCamera, Input.mousePosition);
             dragPanMoveActive = true;
         }
 
@@ -83,7 +84,7 @@ public class CameraSystem : MonoBehaviour
             return new Vector3();
         }
 
-        var difference = dragOrigin - ScreenPositionToGroundRaycast(Input.mousePosition);
+        var difference = dragOrigin - ScreenPositionToGroundRaycast(mainCamera, Input.mousePosition);
         difference.y = 0;
         return difference;
     }
@@ -143,16 +144,5 @@ public class CameraSystem : MonoBehaviour
 
         moveDirection = localDirection;
         return localDirection.magnitude > 0;
-    }
-
-
-    //ScreenToWorldPoint у mainCamera не работает, почему - не знаю
-    //Загуглить не получилось, при этом все остальные функции которые конвертируют ворлд в скрин и наоборот работают
-    //Поэтому пришлось писать этот метод
-    private Vector3 ScreenPositionToGroundRaycast(Vector3 screenPosition)
-    {
-        Physics.Raycast(mainCamera.ScreenPointToRay(screenPosition), out var hit, 100_000, LayerMask.GetMask("Ground"));
-
-        return hit.point;
     }
 }

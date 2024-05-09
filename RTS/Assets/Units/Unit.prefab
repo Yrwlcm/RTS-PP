@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4377937261241959608}
   - component: {fileID: 4914549983962485550}
+  - component: {fileID: 6995907035310351753}
   m_Layer: 7
   m_Name: CurrentTaskLine
   m_TagString: Untagged
@@ -75,8 +76,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 50, y: 1, z: 50}
-  - {x: 5, y: 5, z: 5}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -136,6 +137,21 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &6995907035310351753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2750480610303749675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c6bacf39937620428231323195c88f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineRenderer: {fileID: 4914549983962485550}
+  walkingPath: {fileID: 2100000, guid: f49f61d9792d32345a7c4b20e46f2d54, type: 2}
+  attackPath: {fileID: 2100000, guid: 603e89284601bde468ec6729a9c63638, type: 2}
 --- !u!1 &4388634308898968868
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,6 +168,8 @@ GameObject:
   - component: {fileID: 4407559659221995935}
   - component: {fileID: 1235688194121416881}
   - component: {fileID: 6754613513094003202}
+  - component: {fileID: 3118170187915502722}
+  - component: {fileID: 6430604372508169602}
   m_Layer: 7
   m_Name: Unit
   m_TagString: Untagged
@@ -277,16 +295,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4388634308898968868}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e0fba0a57840b734e83e38bef121567f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 0}
+  ShouldTakeCommands: 0
   ground:
     serializedVersion: 2
     m_Bits: 64
-  lineRenderer: {fileID: 4914549983962485550}
+  lineRendererController: {fileID: 6995907035310351753}
 --- !u!114 &1235688194121416881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -870,3 +888,39 @@ MonoBehaviour:
     - {x: 0.7063923, y: 0.04494747, z: 0.706392}
     - {x: 0.34110048, y: 0.6646991, z: 0.6646996}
     - {x: 0.17692533, y: 0.69595146, z: 0.6959518}
+--- !u!114 &3118170187915502722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4388634308898968868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bebe3c232d73f94d999f51d7c112d19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
+--- !u!114 &6430604372508169602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4388634308898968868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67bd3b6806cc52c44a1d1c5f4d0d1679, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShouldTakeCommands: 0
+  attackPoint: {fileID: 0}
+  projectilePrefab: {fileID: 0}
+  attackRange: 10
+  attackCooldown: 1
+  unitMovement: {fileID: 4407559659221995935}
+  mask:
+    serializedVersion: 2
+    m_Bits: 128
+  lineRendererController: {fileID: 6995907035310351753}

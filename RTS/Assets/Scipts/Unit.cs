@@ -13,6 +13,7 @@ namespace Scipts
         
         private Outline outline;
         private UnitMovement movement;
+        private Attack attack;
 
         private void Start()
         {
@@ -20,6 +21,7 @@ namespace Scipts
             SelectionManager.Instance.allUnits.Add(this);
             outline = GetComponent<Outline>();
             movement = GetComponent<UnitMovement>();
+            attack = GetComponent<Attack>();
             
             lineRenderer.SetPosition(0, transform.position);
             lineRenderer.SetPosition(1, transform.position);
@@ -46,7 +48,8 @@ namespace Scipts
         {
             EnableOutline();
             Selected = true;
-            movement.enabled = true;
+            movement.ShouldTakeCommands = true;
+            attack.ShouldTakeCommands = true;
             lineRenderer.enabled = true;
         }
 
@@ -54,7 +57,8 @@ namespace Scipts
         {
             DisableOutline();
             Selected = false;
-            movement.enabled = false;
+            movement.ShouldTakeCommands = false;
+            attack.ShouldTakeCommands = false;
             lineRenderer.enabled = false;
         }
     }
