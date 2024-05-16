@@ -21,6 +21,13 @@ public class SelectionManager : MonoBehaviour
 
     private const float DragTreshold = 50;
 
+    public void RemoveUnit(ISelectable unit)
+    {
+        allUnits.Remove(unit);
+        selectedUnits.Remove(unit);
+        unitsInBox.Remove(unit);
+    }
+
     private void Awake()
     {
         if (Instance is not null && Instance != this)

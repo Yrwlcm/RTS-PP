@@ -29,7 +29,8 @@ namespace Scipts
 
         private void OnDestroy()
         {
-            SelectionManager.Instance.allUnits.Remove(this);
+            Deselect();
+            SelectionManager.Instance.RemoveUnit(this);
         }
 
         public void EnableOutline()

@@ -14,6 +14,7 @@ public class Attack : MonoBehaviour
     [SerializeField] [CanBeNull] private Transform projectilePrefab;
     [SerializeField] private float attackRange = 10f;
     [SerializeField] private float attackCooldown = 1f;
+    
     [SerializeField] private UnitMovement unitMovement;
     [SerializeField] private LayerMask mask;
     [SerializeField] private LineRendererController lineRendererController;
@@ -32,7 +33,10 @@ public class Attack : MonoBehaviour
         if (ShouldTakeCommands)
             SetTarget();
 
-        if (target is null) return;
+        if (target == null)
+        {
+            return;
+        }
 
         if (Vector3.Distance(transform.position, target.position) > attackRange)
         {
@@ -60,9 +64,11 @@ public class Attack : MonoBehaviour
 
     private void Shoot(Transform target)
     {
-        // var projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
-        // projectile.LookAt(target);
-        Debug.Log($"Shooting {target}");
-        // Добавьте здесь компоненты, управляющие движением снаряда
+        var projectileInstance = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+        var projectile = projectileInstance.GetComponent<Projectile>();
+        if (projectile != null)
+        {
+            projectile.SetTarget(target);
+        }
     }
 }
