@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Scipts.Interfaces;
 using UnityEngine;
+using static CameraUtilities;
 
 public class SelectionManager : MonoBehaviour
 {
@@ -10,15 +11,22 @@ public class SelectionManager : MonoBehaviour
     private readonly HashSet<ISelectable> selectedUnits = new();
     private readonly HashSet<ISelectable> unitsInBox = new();
 
-    public LayerMask clickable;
-
-    private Camera mainCamera;
+    [SerializeField] private Camera mainCamera;
     [SerializeField] private RectTransform boxVisual;
+    [SerializeField] private LayerMask clickable;
+
     private Rect selectionBox;
-    private Vector2 startPosition;
-    private Vector2 endPosition;
+    private Vector3 startPosition;
+    private Vector3 endPosition;
 
     private const float DragTreshold = 50;
+
+    public void RemoveUnit(ISelectable unit)
+    {
+        allUnits.Remove(unit);
+        selectedUnits.Remove(unit);
+        unitsInBox.Remove(unit);
+    }
 
     private void Awake()
     {
@@ -34,8 +42,6 @@ public class SelectionManager : MonoBehaviour
 
     private void Start()
     {
-        mainCamera = Camera.main;
-
         startPosition = Vector2.zero;
         endPosition = Vector2.zero;
 
@@ -67,7 +73,7 @@ public class SelectionManager : MonoBehaviour
             DeselectAll();
         }
 
-        startPosition = Input.mousePosition;
+        startPosition = ScreenPositionToGroundRaycast(mainCamera, Input.mousePosition);
         selectionBox = new Rect();
     }
 
@@ -90,7 +96,7 @@ public class SelectionManager : MonoBehaviour
             }
         }
 
-        endPosition = Input.mousePosition;
+        endPosition = ScreenPositionToGroundRaycast(mainCamera, Input.mousePosition);
         DrawVisual();
         DrawSelection();
     }
@@ -146,8 +152,8 @@ public class SelectionManager : MonoBehaviour
 
     private void DrawVisual()
     {
-        var boxStart = startPosition;
-        var boxEnd = endPosition;
+        var boxStart = mainCamera.WorldToScreenPoint(startPosition);
+        var boxEnd = mainCamera.WorldToScreenPoint(endPosition);
 
         var boxCenter = (boxStart + boxEnd) / 2;
 
@@ -160,10 +166,10 @@ public class SelectionManager : MonoBehaviour
 
     private void DrawSelection()
     {
-        selectionBox.xMin = Mathf.Min(Input.mousePosition.x, startPosition.x);
-        selectionBox.xMax = Mathf.Max(Input.mousePosition.x, startPosition.x);
+        selectionBox.xMin = Mathf.Min(Input.mousePosition.x, mainCamera.WorldToScreenPoint(startPosition).x);
+        selectionBox.xMax = Mathf.Max(Input.mousePosition.x, mainCamera.WorldToScreenPoint(startPosition).x);
 
-        selectionBox.yMin = Mathf.Min(Input.mousePosition.y, startPosition.y);
-        selectionBox.yMax = Mathf.Max(Input.mousePosition.y, startPosition.y);
+        selectionBox.yMin = Mathf.Min(Input.mousePosition.y, mainCamera.WorldToScreenPoint(startPosition).y);
+        selectionBox.yMax = Mathf.Max(Input.mousePosition.y, mainCamera.WorldToScreenPoint(startPosition).y);
     }
 }
