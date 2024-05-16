@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Scipts.Interfaces;
 using UnityEngine;
+using static CameraUtilities;
 
 public class SelectionManager : MonoBehaviour
 {
@@ -19,6 +20,13 @@ public class SelectionManager : MonoBehaviour
     private Vector3 endPosition;
 
     private const float DragTreshold = 50;
+
+    public void RemoveUnit(ISelectable unit)
+    {
+        allUnits.Remove(unit);
+        selectedUnits.Remove(unit);
+        unitsInBox.Remove(unit);
+    }
 
     private void Awake()
     {
@@ -65,7 +73,7 @@ public class SelectionManager : MonoBehaviour
             DeselectAll();
         }
 
-        startPosition = ScreenPositionToGroundRaycast(Input.mousePosition);
+        startPosition = ScreenPositionToGroundRaycast(mainCamera, Input.mousePosition);
         selectionBox = new Rect();
     }
 
@@ -88,7 +96,7 @@ public class SelectionManager : MonoBehaviour
             }
         }
 
-        endPosition = ScreenPositionToGroundRaycast(Input.mousePosition);
+        endPosition = ScreenPositionToGroundRaycast(mainCamera, Input.mousePosition);
         DrawVisual();
         DrawSelection();
     }
@@ -163,12 +171,5 @@ public class SelectionManager : MonoBehaviour
 
         selectionBox.yMin = Mathf.Min(Input.mousePosition.y, mainCamera.WorldToScreenPoint(startPosition).y);
         selectionBox.yMax = Mathf.Max(Input.mousePosition.y, mainCamera.WorldToScreenPoint(startPosition).y);
-    }
-
-    private Vector3 ScreenPositionToGroundRaycast(Vector3 screenPosition)
-    {
-        Physics.Raycast(mainCamera.ScreenPointToRay(screenPosition), out var hit, 100_000, LayerMask.GetMask("Ground"));
-
-        return hit.point;
     }
 }

@@ -3,12 +3,13 @@ using Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
+using static CameraUtilities;
 
 public class CameraSystem : MonoBehaviour
 {
     [SerializeField] private int moveSpeed = 35;
     [SerializeField] private int rotateSpeed = 100;
-    [SerializeField] private int edgeScrollingBorder = 20;
+    [SerializeField] private int edgeScrollingBorderPercent = 20;
     [SerializeField] private Camera mainCamera;
     [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
     [SerializeField] private float followOffsetMin = 50f;
@@ -21,6 +22,10 @@ public class CameraSystem : MonoBehaviour
     private Vector3 dragOrigin;
     private Vector3 followOffset;
 
+    bool IsMouseOverGameWindow =>
+        !(0 > Input.mousePosition.x || 0 > Input.mousePosition.y || Screen.width < Input.mousePosition.x ||
+          Screen.height < Input.mousePosition.y) && Application.isFocused;
+
     private void Awake()
     {
         followOffset = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset;
@@ -28,6 +33,9 @@ public class CameraSystem : MonoBehaviour
 
     void Update()
     {
+        if (!IsMouseOverGameWindow)
+            return;
+
         var inputDirection = new Vector3();
 
         HandleCameraZoom();
@@ -66,7 +74,7 @@ public class CameraSystem : MonoBehaviour
     {
         if (Input.GetMouseButtonDown((int)MouseButton.Middle) && !dragPanMoveActive)
         {
-            dragOrigin = ScreenPositionToGroundRaycast(Input.mousePosition);
+            dragOrigin = ScreenPositionToGroundRaycast(mainCamera, Input.mousePosition);
             dragPanMoveActive = true;
         }
 
@@ -76,7 +84,7 @@ public class CameraSystem : MonoBehaviour
             return new Vector3();
         }
 
-        var difference = dragOrigin - ScreenPositionToGroundRaycast(Input.mousePosition);
+        var difference = dragOrigin - ScreenPositionToGroundRaycast(mainCamera, Input.mousePosition);
         difference.y = 0;
         return difference;
     }
@@ -124,23 +132,17 @@ public class CameraSystem : MonoBehaviour
     private bool CheckEdgeScrollDirection(out Vector3 moveDirection)
     {
         var localDirection = new Vector3();
-        if (Input.mousePosition.x < edgeScrollingBorder) localDirection.x = -1;
-        if (Input.mousePosition.y < edgeScrollingBorder) localDirection.z = -1;
-        if (Input.mousePosition.x > Screen.width - edgeScrollingBorder) localDirection.x = +1;
-        if (Input.mousePosition.y > Screen.height - edgeScrollingBorder) localDirection.z = +1;
+        var scrollingBorderPercent = 1d / edgeScrollingBorderPercent;
+        if (Input.mousePosition.x < Screen.width * scrollingBorderPercent)
+            localDirection.x = -1;
+        if (Input.mousePosition.y < Screen.height * scrollingBorderPercent)
+            localDirection.z = -1;
+        if (Input.mousePosition.x > Screen.width - Screen.width * scrollingBorderPercent)
+            localDirection.x = +1;
+        if (Input.mousePosition.y > Screen.height - Screen.height * scrollingBorderPercent)
+            localDirection.z = +1;
 
         moveDirection = localDirection;
         return localDirection.magnitude > 0;
-    }
-
-
-    //ScreenToWorldPoint у mainCamera не работает, почему - не знаю
-    //Загуглить не получилось, при этом все остальные функции которые конвертируют ворлд в скрин и наоборот работают
-    //Поэтому пришлось писать этот метод
-    private Vector3 ScreenPositionToGroundRaycast(Vector3 screenPosition)
-    {
-        Physics.Raycast(mainCamera.ScreenPointToRay(screenPosition), out var hit, 100_000, LayerMask.GetMask("Ground"));
-
-        return hit.point;
     }
 }

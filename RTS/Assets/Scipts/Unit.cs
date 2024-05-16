@@ -9,8 +9,11 @@ namespace Scipts
         public bool Selected { get; private set; }
         public bool OutlineEnabled { get; private set; }
 
+        [SerializeField] private LineRenderer lineRenderer;
+        
         private Outline outline;
         private UnitMovement movement;
+        private Attack attack;
 
         private void Start()
         {
@@ -18,11 +21,16 @@ namespace Scipts
             SelectionManager.Instance.allUnits.Add(this);
             outline = GetComponent<Outline>();
             movement = GetComponent<UnitMovement>();
+            attack = GetComponent<Attack>();
+            
+            lineRenderer.SetPosition(0, transform.position);
+            lineRenderer.SetPosition(1, transform.position);
         }
 
         private void OnDestroy()
         {
-            SelectionManager.Instance.allUnits.Remove(this);
+            Deselect();
+            SelectionManager.Instance.RemoveUnit(this);
         }
 
         public void EnableOutline()
@@ -41,14 +49,18 @@ namespace Scipts
         {
             EnableOutline();
             Selected = true;
-            movement.enabled = true;
+            movement.ShouldTakeCommands = true;
+            attack.ShouldTakeCommands = true;
+            lineRenderer.enabled = true;
         }
 
         public void Deselect()
         {
             DisableOutline();
             Selected = false;
-            movement.enabled = false;
+            movement.ShouldTakeCommands = false;
+            attack.ShouldTakeCommands = false;
+            lineRenderer.enabled = false;
         }
     }
 }
