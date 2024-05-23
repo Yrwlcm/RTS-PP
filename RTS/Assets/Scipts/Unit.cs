@@ -8,7 +8,9 @@ namespace Scipts
         public GameObject GameObject { get; private set; }
         public bool Selected { get; private set; }
         public bool OutlineEnabled { get; private set; }
-
+        public int Team => team;
+        
+        [SerializeField] private int team = 0;
         [SerializeField] private LineRenderer lineRenderer;
         
         private Outline outline;
@@ -61,6 +63,11 @@ namespace Scipts
             movement.ShouldTakeCommands = false;
             attack.ShouldTakeCommands = false;
             lineRenderer.enabled = false;
+        }
+
+        public void SetTeam(int team)
+        {
+            this.team = team;
         }
     }
 }
