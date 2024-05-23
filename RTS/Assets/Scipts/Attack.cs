@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
-using static CameraUtilities;
+using Unit = Scipts.Unit;
 
 public class Attack : MonoBehaviour
 {
@@ -14,7 +14,8 @@ public class Attack : MonoBehaviour
     [SerializeField] [CanBeNull] private Transform projectilePrefab;
     [SerializeField] private float attackRange = 10f;
     [SerializeField] private float attackCooldown = 1f;
-    
+
+    [SerializeField] private Unit unit;
     [SerializeField] private UnitMovement unitMovement;
     [SerializeField] private LayerMask mask;
     [SerializeField] private LineRendererController lineRendererController;
@@ -48,7 +49,11 @@ public class Attack : MonoBehaviour
             Shoot(target);
             lastAttackTime = Time.time;
         }
-        
+        else
+        {
+            unitMovement.MoveTo(transform.position);
+        }
+
         lineRendererController.DrawAttackingLine(target.position);
     }
 
@@ -59,7 +64,15 @@ public class Attack : MonoBehaviour
         var isHit = Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out var hit, 100_000,
             LayerMask.GetMask("Unit"));
 
-        target = isHit ? hit.transform : null;
+        if (!isHit)
+        {
+            target = null;
+            return;
+        }
+        
+        target = hit.transform.GetComponent<Unit>().Team == unit.Team
+            ? null
+            : hit.transform;
     }
 
     private void Shoot(Transform target)

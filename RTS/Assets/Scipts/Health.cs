@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Scipts;
 using UnityEngine;
 
 public class Health : MonoBehaviour
@@ -7,13 +8,15 @@ public class Health : MonoBehaviour
     [SerializeField] private float maxHealth = 100f;
     [SerializeField] private float currentHealth;
     [SerializeField] private FloatingHealthBar healthBar;
-    
+    [SerializeField] private Unit unit;
+
     public float CurrentHealth => currentHealth;
 
     private void Start()
     {
         currentHealth = maxHealth;
         healthBar = GetComponentInChildren<FloatingHealthBar>();
+        healthBar.SetColor(Teams.Colors[unit.Team]);
     }
 
     private void Update()
