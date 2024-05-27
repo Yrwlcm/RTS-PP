@@ -1,8 +1,6 @@
-using System;
 using Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
 using static CameraUtilities;
 
 public class CameraSystem : MonoBehaviour
