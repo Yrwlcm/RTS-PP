@@ -11,6 +11,8 @@ public class SelectionManager : MonoBehaviour
     private readonly HashSet<ISelectable> selectedUnits = new();
     private readonly HashSet<ISelectable> unitsInBox = new();
 
+    public HashSet<ISelectable> SelectedUnit => selectedUnits;
+    
     [SerializeField] private Camera mainCamera;
     [SerializeField] private RectTransform boxVisual;
     [SerializeField] private LayerMask clickable;

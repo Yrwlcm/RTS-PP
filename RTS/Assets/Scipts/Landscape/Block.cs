@@ -14,8 +14,8 @@ public class Block : MonoBehaviour
 
     void Awake()
     {
-        navMeshSurface = GetComponent<NavMeshSurface>();
-        navMeshSurface.BuildNavMesh();
+        // navMeshSurface = GetComponent<NavMeshSurface>();
+        // navMeshSurface.BuildNavMesh();
         infectScore = 0;
     }
 
