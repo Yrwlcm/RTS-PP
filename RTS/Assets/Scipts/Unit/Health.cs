@@ -22,6 +22,11 @@ public class Health : MonoBehaviour
         healthBar.SetHealth(currentHealth, maxHealth);
     }
 
+    public void Heal(float amount)
+    {
+        currentHealth = Mathf.Clamp(currentHealth  + amount, 0, maxHealth);
+    }
+
     public void TakeDamage(float amount)
     {
         currentHealth -= amount;

@@ -281,7 +281,7 @@ GameObject:
   - component: {fileID: 6754613513094003202}
   - component: {fileID: 3118170187915502722}
   - component: {fileID: 6430604372508169602}
-  - component: {fileID: 3167051040748492109}
+  - component: {fileID: 2080576630685625224}
   m_Layer: 7
   m_Name: UnitWithAbilities
   m_TagString: Untagged
@@ -1042,7 +1042,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   lineRendererController: {fileID: 6995907035310351753}
---- !u!114 &3167051040748492109
+--- !u!114 &2080576630685625224
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1055,16 +1055,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Abilities:
-  - abilityName: Googa
-    icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-    hotkey: 257
-    cooldown: 5
-    lastUsedTime: 0
-  - abilityName: Guuga
-    icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
-    hotkey: 260
-    cooldown: 4
-    lastUsedTime: 0
+  - {fileID: 0}
+  ShouldActivate: 0
+  unit: {fileID: 1235688194121416881}
 --- !u!1 &7031525093670158149
 GameObject:
   m_ObjectHideFlags: 0

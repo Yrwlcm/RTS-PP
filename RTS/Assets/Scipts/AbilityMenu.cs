@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Scipts;
 using TMPro;
@@ -11,7 +10,7 @@ public class AbilityMenu : MonoBehaviour
     public Transform abilityPanel;
 
     private UnitAbilities selectedUnitAbilities;
-    
+
     private void Start()
     {
         HideMenu();
@@ -34,6 +33,7 @@ public class AbilityMenu : MonoBehaviour
     public void ShowMenu(UnitAbilities unit)
     {
         selectedUnitAbilities = unit;
+        selectedUnitAbilities.ShouldActivate = true;
 
         // Очистить старые кнопки способностей
         foreach (Transform child in abilityPanel)
@@ -50,7 +50,8 @@ public class AbilityMenu : MonoBehaviour
 
             icon.sprite = ability.icon;
             hotkeyText.text = ability.hotkey.ToString();
-            button.GetComponent<Button>().onClick.AddListener(() => ability.Use());
+            // TODO: Сделать абилки кликабельными
+            // button.GetComponent<Button>().onClick.AddListener(() => ability.Use());
         }
 
         abilityPanel.gameObject.SetActive(true);
@@ -59,5 +60,8 @@ public class AbilityMenu : MonoBehaviour
     private void HideMenu()
     {
         abilityPanel.gameObject.SetActive(false);
+        if (selectedUnitAbilities != null)
+            selectedUnitAbilities.ShouldActivate = false;
+        selectedUnitAbilities = null;
     }
 }
