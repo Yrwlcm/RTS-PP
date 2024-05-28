@@ -9,6 +9,7 @@ public class Attack : MonoBehaviour
 
     [SerializeField] private Transform attackPoint;
     [SerializeField] [CanBeNull] private Transform projectilePrefab;
+    [SerializeField] private float attackDamage = 10f;
     [SerializeField] private float attackRange = 10f;
     [SerializeField] private float attackCooldown = 1f;
 
@@ -76,6 +77,7 @@ public class Attack : MonoBehaviour
     {
         var projectileInstance = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
         var projectile = projectileInstance.GetComponent<Projectile>();
+        projectile.damage = attackDamage;
         if (projectile != null)
         {
             projectile.SetTarget(target);
