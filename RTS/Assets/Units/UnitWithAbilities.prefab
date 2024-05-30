@@ -1016,7 +1016,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
-  healthBar: {fileID: 0}
+  healthBar: {fileID: 1084469260780925858}
   unit: {fileID: 1235688194121416881}
 --- !u!114 &6430604372508169602
 MonoBehaviour:
@@ -1034,6 +1034,7 @@ MonoBehaviour:
   attackPoint: {fileID: 0}
   projectilePrefab: {fileID: 8261868291957103087, guid: d9f384a4095d34b47b5e2a2fc532ae3b,
     type: 3}
+  attackDamage: 10
   attackRange: 10
   attackCooldown: 1
   unit: {fileID: 1235688194121416881}

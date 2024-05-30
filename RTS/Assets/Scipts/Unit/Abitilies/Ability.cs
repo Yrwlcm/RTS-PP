@@ -10,6 +10,7 @@ public abstract class Ability : ScriptableObject
     public Sprite icon;
     public KeyCode hotkey;
     public float cooldown;
+    public float RemainingCooldown => Mathf.Clamp(cooldown - (Time.time - lastUsedTime), 0f, cooldown);
     public float lastUsedTime = 0f;
 
     public Ability InstantiateAndInitialize()
@@ -18,7 +19,7 @@ public abstract class Ability : ScriptableObject
         abilityInstance.Initialize();
         return abilityInstance;
     }
-    
+
     protected virtual void Initialize()
     {
         // Инициализация способности
