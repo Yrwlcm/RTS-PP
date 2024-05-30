@@ -429,6 +429,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d21b7928c226bc24faa61849de45bb67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnTime: 25
+  team: 0
   lineRenderer: {fileID: 4914549983962485550}
 --- !u!114 &6754613513094003202
 MonoBehaviour:
@@ -1014,7 +1016,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 125
   currentHealth: 0
-  healthBar: {fileID: 0}
+  healthBar: {fileID: 1084469260780925858}
+  unit: {fileID: 1235688194121416881}
 --- !u!114 &6430604372508169602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1034,6 +1037,7 @@ MonoBehaviour:
   attackDamage: 55
   attackRange: 2
   attackCooldown: 0.5
+  unit: {fileID: 1235688194121416881}
   unitMovement: {fileID: 4407559659221995935}
   mask:
     serializedVersion: 2
@@ -1246,6 +1250,7 @@ MonoBehaviour:
   healthBar: {fileID: 8114703111303367274}
   mainCamera: {fileID: 0}
   offset: {x: 0, y: 1.5, z: 0}
+  healthBarImage: {fileID: 7291400473395719543}
 --- !u!1 &7554113271389767513
 GameObject:
   m_ObjectHideFlags: 0

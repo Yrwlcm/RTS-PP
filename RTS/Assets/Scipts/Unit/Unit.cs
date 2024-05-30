@@ -9,6 +9,7 @@ namespace Scipts
         public bool Selected { get; private set; }
         public bool OutlineEnabled { get; private set; }
         public int Team => team;
+        public float spawnTime;
         
         [SerializeField] private int team = 0;
         [SerializeField] private LineRenderer lineRenderer;

@@ -380,6 +380,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d21b7928c226bc24faa61849de45bb67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnTime: 5
   team: 0
   lineRenderer: {fileID: 4914549983962485550}
 --- !u!114 &6754613513094003202

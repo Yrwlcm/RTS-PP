@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b58a3a07bfb8cbb4ca0e643b192dd2bd, type: 3}
+  m_Name: All Metal Fortress
+  m_EditorClassIdentifier: 
+  type: 7
+  name: All Metal Fortress
+  buildingPrefab: {fileID: 4642484264177961654, guid: 4f8609ac94f4092448df170daf389e84,
+    type: 3}
+  icon: {fileID: 0}
+  buildTime: 45
+  baseStats:
+    health: 1000
+    woodCost: 300
+    mineralCost: 300
