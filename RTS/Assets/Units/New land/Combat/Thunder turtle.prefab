@@ -279,6 +279,8 @@ GameObject:
   - component: {fileID: 6754613513094003202}
   - component: {fileID: 3118170187915502722}
   - component: {fileID: 6430604372508169602}
+  - component: {fileID: -1041693118720945996}
+  - component: {fileID: -1159908319060244407}
   m_Layer: 7
   m_Name: Thunder turtle
   m_TagString: Untagged
@@ -964,8 +966,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 250
   currentHealth: 0
-  healthBar: {fileID: 0}
-  unit: {fileID: 0}
+  healthBar: {fileID: 1084469260780925858}
+  unit: {fileID: 1235688194121416881}
 --- !u!114 &6430604372508169602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -985,12 +987,50 @@ MonoBehaviour:
   attackDamage: 15
   attackRange: 2
   attackCooldown: 1.5
-  unit: {fileID: 0}
+  unit: {fileID: 1235688194121416881}
   unitMovement: {fileID: 4407559659221995935}
   mask:
     serializedVersion: 2
     m_Bits: 128
   lineRendererController: {fileID: 6995907035310351753}
+--- !u!95 &-1041693118720945996
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4388634308898968868}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 312893f539145244eb941380e62dd9e8, type: 3}
+  m_Controller: {fileID: 9100000, guid: 5b3c18d6bf856544098437e350686868, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-1159908319060244407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4388634308898968868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dcd543dc449cb04597d908c79c96fd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Abilities:
+  - {fileID: 11400000, guid: 39faef00fdeadb04582dd6536398cd9f, type: 2}
+  ShouldActivate: 0
+  unit: {fileID: 1235688194121416881}
+  cursorTexture: {fileID: 0}
 --- !u!1 &7031525093670158149
 GameObject:
   m_ObjectHideFlags: 0
@@ -1198,7 +1238,7 @@ MonoBehaviour:
   healthBar: {fileID: 8114703111303367274}
   mainCamera: {fileID: 0}
   offset: {x: 0, y: 1.5, z: 0}
-  healthBarImage: {fileID: 0}
+  healthBarImage: {fileID: 7291400473395719543}
 --- !u!1 &7554113271389767513
 GameObject:
   m_ObjectHideFlags: 0
