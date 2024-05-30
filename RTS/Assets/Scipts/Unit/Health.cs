@@ -12,6 +12,7 @@ public class Health : MonoBehaviour
 
     private void Start()
     {
+        animator = GetComponent<Animator>();
         currentHealth = maxHealth;
         healthBar = GetComponentInChildren<FloatingHealthBar>();
         healthBar.SetColor(Teams.Colors[unit.Team]);
@@ -38,6 +39,7 @@ public class Health : MonoBehaviour
 
     private void Die()
     {
-        Destroy(gameObject);
+        animator.SetBool("Death", true);
+        Destroy(gameObject, 2f);
     }
 }

@@ -22,7 +22,6 @@ public abstract class Ability : ScriptableObject
         abilityInstance.Initialize();
         return abilityInstance;
     }
-
     protected virtual void Initialize()
     {
         // Инициализация способности
