@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &6123911120365447442
+--- !u!1001 &689261160168015389
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -8,35 +8,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3167051040748492109, guid: 76322277e7c716146a1e89e4401131b4,
+    - target: {fileID: 2080576630685625224, guid: 76322277e7c716146a1e89e4401131b4,
         type: 3}
-      propertyPath: Abilities.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3167051040748492109, guid: 76322277e7c716146a1e89e4401131b4,
-        type: 3}
-      propertyPath: Abilities.Array.data[2].icon
+      propertyPath: Abilities.Array.data[0]
       value: 
-      objectReference: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
-    - target: {fileID: 3167051040748492109, guid: 76322277e7c716146a1e89e4401131b4,
-        type: 3}
-      propertyPath: Abilities.Array.data[2].hotkey
-      value: 51
-      objectReference: {fileID: 0}
-    - target: {fileID: 3167051040748492109, guid: 76322277e7c716146a1e89e4401131b4,
-        type: 3}
-      propertyPath: Abilities.Array.data[2].cooldown
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3167051040748492109, guid: 76322277e7c716146a1e89e4401131b4,
-        type: 3}
-      propertyPath: Abilities.Array.data[2].abilityName
-      value: Gnega
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11400000, guid: 416921d7d9539fc4c9e7c2bc64663203,
+        type: 2}
     - target: {fileID: 4388634308898968868, guid: 76322277e7c716146a1e89e4401131b4,
         type: 3}
       propertyPath: m_Name
-      value: UnitWithMoreAbilities 1
+      value: SelfHealUnit
       objectReference: {fileID: 0}
     - target: {fileID: 8721550680119240856, guid: 76322277e7c716146a1e89e4401131b4,
         type: 3}

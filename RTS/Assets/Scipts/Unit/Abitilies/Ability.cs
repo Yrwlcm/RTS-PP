@@ -10,7 +10,11 @@ public abstract class Ability : ScriptableObject
     public Sprite icon;
     public KeyCode hotkey;
     public float cooldown;
-    public float lastUsedTime = 0f;
+    public float RemainingCooldown => Mathf.Clamp(cooldown - (Time.time - lastUsedTime), 0f, cooldown);
+    public bool OnColdown => RemainingCooldown > 0f;
+    public bool requireTarget;
+
+    private float lastUsedTime = 0f;
 
     public Ability InstantiateAndInitialize()
     {
@@ -18,7 +22,7 @@ public abstract class Ability : ScriptableObject
         abilityInstance.Initialize();
         return abilityInstance;
     }
-    
+
     protected virtual void Initialize()
     {
         // Инициализация способности
@@ -30,9 +34,15 @@ public abstract class Ability : ScriptableObject
     {
         if (Time.time - lastUsedTime >= cooldown)
         {
-            lastUsedTime = Time.time;
-            ApplyEffect(user, target);
-            Debug.Log(abilityName + " used!");
+            if (ApplyEffect(user, target))
+            {
+                lastUsedTime = Time.time;
+                Debug.Log(abilityName + " used!");
+            }
+            else
+            {
+                Debug.Log(abilityName + "can't be used!");
+            }
         }
         else
         {
@@ -40,8 +50,9 @@ public abstract class Ability : ScriptableObject
         }
     }
 
-    protected virtual void ApplyEffect(GameObject user, [CanBeNull] GameObject target = null)
+    protected virtual bool ApplyEffect(GameObject user, [CanBeNull] GameObject target = null)
     {
         // Применение эффекта способности
+        return true;
     }
 }
