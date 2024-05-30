@@ -17,8 +17,12 @@ public class AOEStach : Ability
         {
             Debug.Log("Найден объект: " + collider.gameObject.name);
             var unit = collider.gameObject.GetComponent<Unit>();
+            var unitMovement = collider.gameObject.GetComponent<UnitMovement>();
             var myUnit = user.GetComponent<Unit>();
             if (unit != null && unit.Team != myUnit.Team)
+            {
+                unitMovement.IsStagg = true;
+            }
         }
         return true;
     }
