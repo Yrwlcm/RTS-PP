@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b58a3a07bfb8cbb4ca0e643b192dd2bd, type: 3}
+  m_Name: Bio Laboratory
+  m_EditorClassIdentifier: 
+  type: 1
+  name: Bio Laboratory
+  buildingPrefab: {fileID: 4642484264177961654, guid: 635dc504aa9be4149b911d43f67cdad2,
+    type: 3}
+  icon: {fileID: 0}
+  buildTime: 20
+  baseStats:
+    health: 300
+    woodCost: 125
+    mineralCost: 125
