@@ -7,6 +7,7 @@ namespace Scipts.Interfaces
         public GameObject GameObject { get; }
         public bool Selected { get; }
         public bool OutlineEnabled { get; }
+        public int Team { get; }
 
         public void EnableOutline();
         public void DisableOutline();

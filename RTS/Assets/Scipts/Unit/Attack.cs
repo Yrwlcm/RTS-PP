@@ -18,12 +18,14 @@ public class Attack : MonoBehaviour
     [SerializeField] private LayerMask mask;
     [SerializeField] private LineRendererController lineRendererController;
 
+    private Animator animator;
     private Camera mainCamera;
     private float lastAttackTime;
     private Transform target;
 
     private void Start()
     {
+        animator = GetComponent<Animator>();
         mainCamera = Camera.main;
     }
 
@@ -75,6 +77,7 @@ public class Attack : MonoBehaviour
 
     private void Shoot(Transform target)
     {
+        animator?.SetBool("Attacking", true);
         var projectileInstance = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
         var projectile = projectileInstance.GetComponent<Projectile>();
         projectile.damage = attackDamage;

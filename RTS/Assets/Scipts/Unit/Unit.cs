@@ -21,7 +21,7 @@ namespace Scipts
         private void Start()
         {
             GameObject = gameObject;
-            SelectionManager.Instance.allUnits.Add(this);
+            SelectionManager.Instances[team].allUnits.Add(this);
             outline = GetComponent<Outline>();
             movement = GetComponent<UnitMovement>();
             attack = GetComponent<Attack>();
@@ -33,7 +33,7 @@ namespace Scipts
         private void OnDestroy()
         {
             Deselect();
-            SelectionManager.Instance.RemoveUnit(this);
+            SelectionManager.Instances[team].RemoveUnit(this);
         }
 
         public void EnableOutline()
