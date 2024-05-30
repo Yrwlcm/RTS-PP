@@ -8,6 +8,8 @@ public class UnitMovement : MonoBehaviour
 
     [SerializeField] private LayerMask ground;
     [SerializeField] private LineRendererController lineRendererController;
+    public bool IsStagg = false;
+    private int staggTiming = 0;
 
     private Camera mainCamera;
     private Animator animator;
@@ -22,6 +24,7 @@ public class UnitMovement : MonoBehaviour
 
     private void Update()
     {
+        if (IsStagging()) return;
         if (navAgent.velocity.x == 0f && navAgent.velocity.y == 0f && navAgent.velocity.z == 0f) 
             animator?.SetBool("Walking", false);
         if (!ShouldTakeCommands) return;
@@ -44,5 +47,22 @@ public class UnitMovement : MonoBehaviour
         animator?.SetBool("Attacking", false);
         navAgent.SetDestination(position);
         lineRendererController.DrawMovingLine(position);
+    }
+
+    private bool IsStagging()
+    {
+        if (IsStagg)
+        {
+            staggTiming++;
+            if (staggTiming > 30)
+            {
+                IsStagg = false;
+                return false;
+            }
+            return true;
+        }
+        
+        return false;
+
     }
 }

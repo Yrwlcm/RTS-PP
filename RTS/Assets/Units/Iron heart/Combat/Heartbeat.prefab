@@ -280,6 +280,8 @@ GameObject:
   - component: {fileID: 3118170187915502722}
   - component: {fileID: 6430604372508169602}
   - component: {fileID: 9192704561244152128}
+  - component: {fileID: 5545839010935166519}
+  - component: {fileID: -6669438134998556077}
   m_Layer: 7
   m_Name: Heartbeat
   m_TagString: Untagged
@@ -367,6 +369,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   lineRendererController: {fileID: 6995907035310351753}
+  IsStagg: 0
 --- !u!114 &1235688194121416881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -965,8 +968,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 550
   currentHealth: 0
-  healthBar: {fileID: 0}
-  unit: {fileID: 0}
+  healthBar: {fileID: 1084469260780925858}
+  unit: {fileID: 1235688194121416881}
 --- !u!114 &6430604372508169602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -986,7 +989,7 @@ MonoBehaviour:
   attackDamage: 250
   attackRange: 4
   attackCooldown: 4
-  unit: {fileID: 0}
+  unit: {fileID: 1235688194121416881}
   unitMovement: {fileID: 4407559659221995935}
   mask:
     serializedVersion: 2
@@ -1013,6 +1016,44 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.9596939, y: 0.49562466, z: 3.2706337}
   m_Center: {x: -0.089645386, y: -0.25218767, z: 0.5757389}
+--- !u!95 &5545839010935166519
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4388634308898968868}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 1e51c8e4903c93a40847658808cef2ae, type: 3}
+  m_Controller: {fileID: 9100000, guid: 90f00b5fe6c235643a08c853859096ad, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-6669438134998556077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4388634308898968868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dcd543dc449cb04597d908c79c96fd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Abilities:
+  - {fileID: 11400000, guid: 2d5525280181ed94d904a26fadf9533f, type: 2}
+  ShouldActivate: 0
+  unit: {fileID: 1235688194121416881}
+  cursorTexture: {fileID: 0}
 --- !u!1 &7031525093670158149
 GameObject:
   m_ObjectHideFlags: 0
@@ -1220,7 +1261,7 @@ MonoBehaviour:
   healthBar: {fileID: 8114703111303367274}
   mainCamera: {fileID: 0}
   offset: {x: 0, y: 1.5, z: 0}
-  healthBarImage: {fileID: 0}
+  healthBarImage: {fileID: 7291400473395719543}
 --- !u!1 &7554113271389767513
 GameObject:
   m_ObjectHideFlags: 0
