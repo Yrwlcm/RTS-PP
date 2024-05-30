@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Military Camp
   m_EditorClassIdentifier: 
   basicUnits:
-  - {fileID: 4388634308898968868, guid: 8b66983eb903b8b48b703855c9eaace8, type: 3}
-  - {fileID: 4388634308898968868, guid: 9d33518e3afee434c918db51337a6d07, type: 3}
-  - {fileID: 4388634308898968868, guid: 35fca024ebb6b8e4c92a5d0fe26f0408, type: 3}
+  - {fileID: 4388634308898968868, guid: 4f3037ed6d967954abd7618afb319e4e, type: 3}
+  - {fileID: 4388634308898968868, guid: 4db8ec6e3f9505241a45f0b6b99f8a87, type: 3}
+  - {fileID: 4388634308898968868, guid: 4db8ec6e3f9505241a45f0b6b99f8a87, type: 3}
   basicBuildings: []

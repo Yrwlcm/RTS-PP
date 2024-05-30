@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Bio Laboratory
   m_EditorClassIdentifier: 
   basicUnits:
-  - {fileID: 4388634308898968868, guid: 965f85463a04fc645b812eca57b06480, type: 3}
+  - {fileID: 4388634308898968868, guid: fb0c8df4bfa3e3f4ab83d54a4da49714, type: 3}
   - {fileID: 4388634308898968868, guid: b5919e9d1f7ed79488a33ce6d1362b79, type: 3}
   basicBuildings: []

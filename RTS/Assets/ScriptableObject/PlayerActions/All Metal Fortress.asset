@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: All Metal Fortress
   m_EditorClassIdentifier: 
   basicUnits:
-  - {fileID: 4388634308898968868, guid: c2c0cd32c1389904383a30860a9d81c1, type: 3}
-  - {fileID: 4388634308898968868, guid: 0c127037a8f366f4fb1f6cc9970e4bc6, type: 3}
+  - {fileID: 4388634308898968868, guid: 4db8ec6e3f9505241a45f0b6b99f8a87, type: 3}
+  - {fileID: 4388634308898968868, guid: 4f3037ed6d967954abd7618afb319e4e, type: 3}
   basicBuildings:
   - {fileID: 11400000, guid: b95d20c00dbad504faa499d2799ea90f, type: 2}
