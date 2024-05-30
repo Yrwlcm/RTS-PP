@@ -51,7 +51,7 @@ public class SelectionManager : MonoBehaviour
     {
         if (!isPlayerManager)
             return;
-        
+
         startPosition = Vector2.zero;
         endPosition = Vector2.zero;
 
@@ -122,6 +122,8 @@ public class SelectionManager : MonoBehaviour
             if (Physics.Raycast(ray, out var hit, Mathf.Infinity, clickable))
             {
                 var selectable = hit.collider.gameObject.GetComponent<ISelectable>();
+                if (selectable.Team != teamId)
+                    return;
 
                 if (selectable.Selected)
                     DeselectAndRemember(selectable);
