@@ -8,16 +8,16 @@ public class UnitAbilities : MonoBehaviour
     public Unit Unit => unit;
 
     [SerializeField] private Unit unit;
+    public Texture2D cursorTexture;
 
     private Ability selectedAbility;
-    public Texture2D cursorTexture;
 
     private void Start()
     {
         for (var i = 0; i < Abilities.Length; i++)
         {
             // Чтобы использовались копии абилок, а не их оригиналы, иначе ведет к синхронизации их между юнитами
-            Abilities[i].hotkey = (KeyCode)(49 + i);
+            Abilities[i].hotkey = (KeyCode)(49 + i); // 49 соответствует клавише '1'
             Abilities[i] = Abilities[i].InstantiateAndInitialize();
         }
     }
@@ -29,15 +29,15 @@ public class UnitAbilities : MonoBehaviour
             CursorMode.Auto);
     }
 
-    public void Update()
+    private void Update()
     {
         if (!ShouldActivate) return;
 
         foreach (var ability in Abilities)
         {
-            if (!Input.GetKeyDown(ability.hotkey) || ability.OnColdown) continue;
+            if (!Input.GetKeyDown(ability.hotkey) || ability.OnCooldown) continue;
 
-            if (ability.requireTarget == false)
+            if (!ability.requireTarget)
             {
                 ability.Use(unit.gameObject);
                 return;
@@ -47,14 +47,11 @@ public class UnitAbilities : MonoBehaviour
             break;
         }
 
-        if (selectedAbility == null || !Input.GetMouseButtonDown(0))
-            return;
+        if (selectedAbility == null || !Input.GetMouseButtonDown(0)) return;
 
-
-        var rayHit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out var hit, 100_000,
-            LayerMask.GetMask("Unit"));
-
-        if (rayHit)
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        
+        if (Physics.Raycast(ray, out var hit, 100_000, LayerMask.GetMask("Unit")))
         {
             selectedAbility.Use(unit.gameObject, hit.collider.gameObject);
         }
