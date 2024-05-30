@@ -5,17 +5,22 @@ using static CameraUtilities;
 
 public class SelectionManager : MonoBehaviour
 {
-    public static SelectionManager Instance { get; private set; }
+    public static Dictionary<int, SelectionManager> Instances { get; } = new();
 
     public readonly HashSet<ISelectable> allUnits = new();
     private readonly HashSet<ISelectable> selectedUnits = new();
     private readonly HashSet<ISelectable> unitsInBox = new();
 
     public HashSet<ISelectable> SelectedUnit => selectedUnits;
-    
+    public int TeamId => teamId;
+    public bool IsPlayerManager => isPlayerManager;
+
+
     [SerializeField] private Camera mainCamera;
     [SerializeField] private RectTransform boxVisual;
     [SerializeField] private LayerMask clickable;
+    [SerializeField] private int teamId;
+    [SerializeField] private bool isPlayerManager;
 
     private Rect selectionBox;
     private Vector3 startPosition;
@@ -32,18 +37,21 @@ public class SelectionManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance is not null && Instance != this)
+        if (Instances.TryGetValue(TeamId, out var instance) && Instances[TeamId] != this)
         {
             Destroy(gameObject);
         }
         else
         {
-            Instance = this;
+            Instances.TryAdd(TeamId, this);
         }
     }
 
     private void Start()
     {
+        if (!isPlayerManager)
+            return;
+
         startPosition = Vector2.zero;
         endPosition = Vector2.zero;
 
@@ -52,6 +60,9 @@ public class SelectionManager : MonoBehaviour
 
     private void Update()
     {
+        if (!isPlayerManager)
+            return;
+
         if (Input.GetMouseButtonDown(0))
         {
             OnMouseClick();
@@ -111,6 +122,8 @@ public class SelectionManager : MonoBehaviour
             if (Physics.Raycast(ray, out var hit, Mathf.Infinity, clickable))
             {
                 var selectable = hit.collider.gameObject.GetComponent<ISelectable>();
+                if (selectable.Team != teamId)
+                    return;
 
                 if (selectable.Selected)
                     DeselectAndRemember(selectable);

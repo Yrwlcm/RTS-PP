@@ -8,8 +8,6 @@ public class Health : MonoBehaviour
     [SerializeField] private FloatingHealthBar healthBar;
     [SerializeField] private Unit unit;
 
-    private Animator animator;
-
     public float CurrentHealth => currentHealth;
 
     private void Start()

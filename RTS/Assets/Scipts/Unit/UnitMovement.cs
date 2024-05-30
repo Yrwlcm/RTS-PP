@@ -29,6 +29,8 @@ public class UnitMovement : MonoBehaviour
         if (!Input.GetMouseButtonDown((int)MouseButton.Right))
             return;
 
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+
         var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out var hit, Mathf.Infinity, ground))
