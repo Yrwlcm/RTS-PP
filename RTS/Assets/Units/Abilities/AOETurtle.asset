@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ea541a394b485445a63b43c093d222b, type: 3}
   m_Name: AOETurtle
   m_EditorClassIdentifier: 
-  abilityName: 
+  abilityName: "\u0420\u0430\u0441\u043A\u0430\u0442 \u0433\u0440\u043E\u043C\u0430"
   icon: {fileID: 0}
-  hotkey: 0
-  cooldown: 0
+  hotkey: 49
+  cooldown: 10
   requireTarget: 0
