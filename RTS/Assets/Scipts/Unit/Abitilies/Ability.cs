@@ -11,7 +11,7 @@ public abstract class Ability : ScriptableObject
     public KeyCode hotkey;
     public float cooldown;
     public float RemainingCooldown => Mathf.Clamp(cooldown - (Time.time - lastUsedTime), 0f, cooldown);
-    public bool OnColdown => RemainingCooldown > 0f;
+    public bool OnCooldown => RemainingCooldown > 0f;
     public bool requireTarget;
 
     private float lastUsedTime = 0f;

@@ -5,7 +5,7 @@ public class LineRendererController : MonoBehaviour
     private Vector3? target;
     private bool isMoving;
     private bool isAttacking;
-    
+
     [SerializeField] private LineRenderer lineRenderer;
     [SerializeField] private Material walkingPath;
     [SerializeField] private Material attackPath;
@@ -15,7 +15,7 @@ public class LineRendererController : MonoBehaviour
         lineRenderer.SetPosition(0, transform.position);
         lineRenderer.SetPosition(1, transform.position);
     }
-    
+
     private void Update()
     {
         if (isAttacking)
@@ -26,6 +26,7 @@ public class LineRendererController : MonoBehaviour
         {
             lineRenderer.material = walkingPath;
         }
+
         lineRenderer.SetPosition(0, transform.position);
         if (target is not null)
         {
@@ -45,5 +46,13 @@ public class LineRendererController : MonoBehaviour
         isMoving = false;
         isAttacking = true;
         target = position;
+    }
+
+    public void Clear()
+    {
+        if (isMoving || isAttacking || target is not null) return;
+
+        lineRenderer.SetPosition(0, transform.position);
+        lineRenderer.SetPosition(1, transform.position);
     }
 }

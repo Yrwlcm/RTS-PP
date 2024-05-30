@@ -13,6 +13,7 @@ public class AbilityMenu : MonoBehaviour
 {
     public GameObject abilityButtonPrefab;
     public Transform abilityPanel;
+    public readonly int TeamId;
 
     private UnitAbilities selectedUnitAbilities;
     private readonly List<AbilityButton> abilityButtons = new();
@@ -26,13 +27,13 @@ public class AbilityMenu : MonoBehaviour
 
     private void Update()
     {
-        if (SelectionManager.Instance.SelectedUnit.Count != 1)
+        if (SelectionManager.Instances[TeamId].SelectedUnit.Count != 1)
         {
             HideMenu();
             return;
         }
 
-        var unit = SelectionManager.Instance.SelectedUnit.First() as Unit;
+        var unit = SelectionManager.Instances[TeamId].SelectedUnit.First() as Unit;
         var unitAbilities = unit?.GetComponent<UnitAbilities>();
         if (unitAbilities == null) return;
         ShowMenu(unitAbilities);
